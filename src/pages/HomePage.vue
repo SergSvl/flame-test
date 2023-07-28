@@ -2,6 +2,6 @@
 
 <template>
   <main class="container mx-auto mt-10 -h-40 flex items-center flex-col min-h-[90vh]">
-    <div class="justify-center">Home</div>
+    <div class="justify-center text-3xl">Home</div>
   </main>
 </template>

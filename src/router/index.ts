@@ -3,8 +3,8 @@ import HomePage from '@/pages/HomePage.vue'
 
 export enum RoutePath {
   Main = '/',
-  Peoples = '/peoples',
-  PeoplesById = '/peoples/:id',
+  People = '/people',
+  PeopleById = '/people/:id',
   Favorites = '/favorites'
 }
 
@@ -17,17 +17,17 @@ const router = createRouter({
       component: HomePage
     },
     {
-      path: RoutePath.Peoples,
+      path: RoutePath.People,
       name: 'peoples',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('@/pages/PeoplesPage.vue')
+      component: () => import('@/pages/PeoplePage.vue')
     },
     {
-      path: RoutePath.PeoplesById,
+      path: RoutePath.PeopleById,
       name: 'peoplesById',
-      component: () => import('@/pages/PeoplesPage.vue')
+      component: () => import('@/pages/PeoplePage.vue')
     },
     {
       path: RoutePath.Favorites,
