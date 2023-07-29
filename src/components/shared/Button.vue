@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
+import { type PropType } from 'vue'
 import type { ILSData } from '@/lib/utils/helpers/local-storage-helpers'
 
 const props = defineProps({

@@ -9,6 +9,7 @@ export interface ILSData {
   height: number
   mass: number
   hair_color: string
+  url: string
 }
 
 export const setLSData = (key: string, data: ILSData[] | never[]) =>

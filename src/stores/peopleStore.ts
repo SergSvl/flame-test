@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { getLSData, setLSData, deleteLSData } from '@/lib/utils/helpers/local-storage-helpers'
-import type { ILSData } from '@/lib/utils/helpers/local-storage-helpers'
+import { type ILSData } from '@/lib/utils/helpers/local-storage-helpers'
 import { LOCAL_STORAGE_KEYS } from '@/lib/utils/local-storage-keys'
 
 const url = 'https://swapi.dev/api/people/'
@@ -9,6 +9,7 @@ const url = 'https://swapi.dev/api/people/'
 export const usePeopleStore = defineStore('peopleStore', () => {
   // State
   const people = ref<ILSData[]>([])
+  const found = ref<ILSData[]>([])
   const favorites = ref<ILSData[]>([])
 
   // Actions
@@ -16,7 +17,6 @@ export const usePeopleStore = defineStore('peopleStore', () => {
     const peopleLS = getLSData(LOCAL_STORAGE_KEYS.people)
     if (peopleLS) {
       people.value = peopleLS
-      console.log('fetchPeople LS:', peopleLS)
       return peopleLS
     }
 
@@ -26,8 +26,18 @@ export const usePeopleStore = defineStore('peopleStore', () => {
       people.value = (data.results as ILSData[] & [never]) || []
       setLSData(LOCAL_STORAGE_KEYS.people, people.value)
       return people.value
-    } catch (e) {
-      console.log('Fetch error:', e)
+    } catch (e: any) {
+      throw new Error(e)
+    }
+  }
+
+  const searchPeople = async (search: string) => {
+    try {
+      const res = await fetch(`${url}/?search=${search}`)
+      const data = await res.json()
+      found.value = data.results
+    } catch (e: any) {
+      throw new Error(e)
     }
   }
 
@@ -60,6 +70,7 @@ export const usePeopleStore = defineStore('peopleStore', () => {
 
   // Getters
   const getPeople = computed(() => people.value)
+  const getFound = computed(() => found.value)
   const getFavorites = computed(() => {
     const favoritesLS = getLSData(LOCAL_STORAGE_KEYS.favorites)
     if (favoritesLS) {
@@ -68,5 +79,15 @@ export const usePeopleStore = defineStore('peopleStore', () => {
     return favorites.value
   })
 
-  return { people, getPeople, fetchPeople, favorites, getFavorites, setFavorites, removeFavorite }
+  return {
+    people,
+    getPeople,
+    fetchPeople,
+    searchPeople,
+    getFound,
+    favorites,
+    getFavorites,
+    setFavorites,
+    removeFavorite
+  }
 })
