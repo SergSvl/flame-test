@@ -6,6 +6,7 @@ import { Search } from '@/assets/icons'
 import { Spinner } from '@/assets/icons'
 import { usePeopleStore } from '@/stores'
 import { RoutePath } from '@/router'
+import useDebounce from '@/hooks/useDebounce'
 
 const props = defineProps({
   clickOnParent: {
@@ -13,6 +14,8 @@ const props = defineProps({
     default: () => false
   }
 })
+
+const { debouncedValue, displayValue, debounceListener } = useDebounce()
 
 const peopleStore = usePeopleStore()
 peopleStore.fetchPeople()
@@ -29,7 +32,6 @@ const onAdd = (itemName: string) => {
   console.log('onAdd:', itemName)
 }
 
-const inputValue = ref('')
 const isFocus = ref(false)
 
 watch(
@@ -37,7 +39,7 @@ watch(
   () => onCloseList()
 )
 watch(
-  () => inputValue.value,
+  () => debouncedValue.value,
   async (curr, prev) => {
     isLoading.value = true
     try {
@@ -62,11 +64,12 @@ watchEffect(() => {
     >
       <input
         class="flex justify-center w-full focus:outline-none focus-visible:border-0 focus:border-0 h-[3rem] m-0 p-0"
-        v-model="inputValue"
+        @input="debounceListener"
+        :value="displayValue"
         @click.stop="onOpenList"
       />
       <Search v-if="!isLoading" />
-      <Spinner class="h-6 w-6 -mr-1" v-else />
+      <Spinner class="h-6 w-6 -mr-2" v-else />
     </div>
     <div
       v-if="isFocus && filteredListItems.length"
