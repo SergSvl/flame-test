@@ -1,15 +1,15 @@
-export const getLSData = (key: string) => {
-  const value = localStorage.getItem(key)
-
-  return value ? JSON.parse(value) : null
-}
-
 export interface ILSData {
   name: string
   height: number
   mass: number
   hair_color: string
   url: string
+}
+
+export const getLSData = (key: string) => {
+  const value = localStorage.getItem(key)
+
+  return value ? JSON.parse(value) : null
 }
 
 export const setLSData = (key: string, data: ILSData[] | never[]) =>

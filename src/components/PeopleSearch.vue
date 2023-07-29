@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, watch, watchEffect } from 'vue'
+import { RouterLink } from 'vue-router'
 import { type ILSData } from '@/lib/utils/helpers/local-storage-helpers'
 import { Search } from '@/assets/icons'
 import { Spinner } from '@/assets/icons'
 import { usePeopleStore } from '@/stores'
-import { RouterLink } from 'vue-router'
 import { RoutePath } from '@/router'
 
 const props = defineProps({
