@@ -10,7 +10,7 @@ const linkStyles =
     <div class="container mx-auto flex align-center h-full">
       <nav class="flex items-center flex-wrap mx-auto h-full justify-evenly text-lg font-semibold">
         <RouterLink :class="linkStyles" :to="RoutePath.Main">Home</RouterLink>
-        <RouterLink :class="linkStyles" :to="RoutePath.People">Peoples</RouterLink>
+        <RouterLink :class="linkStyles" :to="RoutePath.People">People</RouterLink>
         <RouterLink :class="linkStyles" :to="RoutePath.Favorites">Favorites</RouterLink>
       </nav>
     </div>

@@ -21,7 +21,7 @@ const onClickMain = () => (isFocus.value = !isFocus.value)
     class="container mx-auto mt-10 flex items-center flex-col w-full justify-center"
     @click="onClickMain"
   >
-    <div class="justify-center text-3xl mb-10">Peoples</div>
+    <div class="justify-center text-3xl mb-10">People</div>
     <PeopleSearch class="mb-8" :clickOnParent="isFocus" />
     <template v-if="personId === undefined">
       <Table v-if="people.length" :people="people" :favorites="favorites" />
